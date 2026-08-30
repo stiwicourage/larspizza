@@ -23,7 +23,7 @@ Review website changes for correctness, accessibility, responsive behavior, main
 - The change diff
 - `.github/copilot-instructions.md`
 - `.github/instructions/repository-conventions.instructions.md`
-- Relevant `*.html`, `assets/css/*`, `assets/js/*`, and media references
+- Relevant `docs/*.html`, `docs/assets/css/*`, `docs/assets/js/*`, and media references
 - `README.md` when touched
 
 ## Skills to use

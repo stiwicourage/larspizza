@@ -19,8 +19,8 @@ Keep the website accurate, user-focused, and consistent across its pages, stylin
 
 ## Inputs to inspect
 
-- Relevant `*.html` pages
-- Related `assets/css/*` and `assets/js/*` files
+- Relevant `docs/*.html` pages
+- Related `docs/assets/css/*` and `docs/assets/js/*` files
 - Referenced images or icons when relevant
 - `README.md` when the change affects setup or project structure
 

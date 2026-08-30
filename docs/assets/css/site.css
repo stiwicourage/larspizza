@@ -1,0 +1,131 @@
+:root {
+    color-scheme: light;
+    --color-bg: #f6efe6;
+    --color-surface: rgba(255, 248, 240, 0.82);
+    --color-primary: #9f2f24;
+    --color-primary-dark: #6e1f19;
+    --color-accent: #cf8b2d;
+    --color-text: #2f241e;
+    --color-muted: #6d584c;
+    --shadow-soft: 0 20px 45px rgba(58, 28, 18, 0.12);
+    --radius-large: 28px;
+    --radius-medium: 18px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2rem 1.25rem;
+    color: var(--color-text);
+    background:
+        radial-gradient(circle at top, rgba(207, 139, 45, 0.18), transparent 32%),
+        linear-gradient(180deg, #fbf6ef 0%, var(--color-bg) 48%, #efe2d3 100%);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero,
+main,
+.site-footer {
+    width: min(100%, 46rem);
+    margin: 0 auto;
+}
+
+.hero {
+    padding: 3rem 0 2rem;
+}
+
+.eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+h1,
+h2,
+p {
+    margin-top: 0;
+}
+
+h1 {
+    max-width: 10ch;
+    margin-bottom: 1rem;
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    line-height: 0.95;
+    color: var(--color-primary-dark);
+}
+
+.lead {
+    max-width: 34rem;
+    margin-bottom: 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+}
+
+main {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0 2rem;
+}
+
+.status-card {
+    width: 100%;
+    padding: 2rem;
+    border: 1px solid rgba(159, 47, 36, 0.12);
+    border-radius: var(--radius-large);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.status-card h2 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--color-primary-dark);
+}
+
+.status-card p {
+    margin-bottom: 0;
+    max-width: 36rem;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.site-footer {
+    padding: 1rem 0 0.5rem;
+}
+
+.site-footer p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--color-muted);
+}
+
+@media (min-width: 48rem) {
+    body {
+        padding: 3rem 2rem;
+    }
+
+    .hero {
+        padding-top: 4rem;
+    }
+
+    .status-card {
+        padding: 2.5rem;
+    }
+}

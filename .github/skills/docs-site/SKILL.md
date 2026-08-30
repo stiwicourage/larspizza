@@ -11,10 +11,10 @@ Use this skill when changing website pages, user-facing copy, layout structure, 
 
 ## Relevant files
 
-- `*.html`
-- `assets/css/*`
-- `assets/js/*`
-- `assets/images/*`
+- `docs/*.html`
+- `docs/assets/css/*`
+- `docs/assets/js/*`
+- `docs/assets/images/*`
 - `README.md`
 
 ## Expected practices

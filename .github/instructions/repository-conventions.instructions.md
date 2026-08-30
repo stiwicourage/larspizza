@@ -20,7 +20,8 @@ Canonical cross-cutting rules for the larspizza website repository.
 - Keep CSS grouped by clear responsibility such as layout, sections, components, or utilities.
 - Keep JavaScript small, focused, and tied to clear user-facing behavior.
 - Prefer reusing existing classes, patterns, and content blocks over copy-paste duplication.
-- Store images and other media in predictable locations under `assets/`.
+- Keep GitHub Pages website files under `docs/`, with shared assets under `docs/assets/`.
+- Store images and other media in predictable locations under `docs/assets/`.
 
 ## UX and content expectations
 

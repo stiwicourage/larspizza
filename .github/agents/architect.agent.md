@@ -24,7 +24,7 @@ Design or reshape website changes before implementation starts.
 - `.github/copilot-instructions.md`
 - `.github/prompts/design-change.prompt.md`
 - `.github/instructions/repository-conventions.instructions.md`
-- Relevant `*.html`, `assets/css/*`, `assets/js/*`, and media paths when present
+- Relevant `docs/*.html`, `docs/assets/css/*`, `docs/assets/js/*`, and media paths when present
 
 ## Skills to use
 
