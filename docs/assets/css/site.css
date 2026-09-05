@@ -199,6 +199,13 @@ main {
     margin: 1rem 0;
 }
 
+.order-review {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-medium);
+    background: rgba(159, 47, 36, 0.08);
+}
+
 .order-item {
     padding: 1rem;
     border-radius: var(--radius-medium);

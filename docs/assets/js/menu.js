@@ -5,6 +5,7 @@ const menuStatus = document.querySelector('#menu-status');
 const orderForm = document.querySelector('#order-form');
 const orderList = document.querySelector('#order-list');
 const orderStatus = document.querySelector('#order-status');
+const orderReview = document.querySelector('#order-review');
 const orderDate = document.querySelector('#order-date');
 const selectedItems = new Map();
 let currentLocation = '';
@@ -16,21 +17,50 @@ function setStatus(message) {
     menuStatus.textContent = message;
 }
 
+function getOrderPayload() {
+    const formData = new FormData(orderForm);
+    return {
+        location: currentLocation,
+        customer_name: formData.get('customer_name'),
+        order_date: formData.get('order_date'),
+        items: Array.from(selectedItems, ([menu_slug, item]) => ({
+            menu_slug,
+            recipients: item.recipients.map((name) => name.trim()),
+        })),
+    };
+}
+
+function renderReview(payload) {
+    orderReview.replaceChildren();
+    const title = document.createElement('strong');
+    title.textContent = `Bestilling til ${payload.order_date}`;
+    orderReview.append(title);
+    payload.items.forEach((item) => {
+        const menuItem = currentMenu.find((entry) => entry.slug === item.menu_slug);
+        const line = document.createElement('p');
+        line.textContent = `${menuItem.name}: ${item.recipients.join(', ')}`;
+        orderReview.append(line);
+    });
+    const confirmButton = document.createElement('button');
+    confirmButton.type = 'button';
+    confirmButton.textContent = 'Bekræft og send bestilling';
+    confirmButton.addEventListener('click', () => sendOrder(payload));
+    orderReview.append(confirmButton);
+    orderReview.hidden = false;
+}
+
 async function submitOrder(event) {
     event.preventDefault();
     if (!currentLocation || selectedItems.size === 0) {
         orderStatus.textContent = 'Vælg lokation og mindst én pizza.';
         return;
     }
-    const payload = {
-        location: currentLocation,
-        customer_name: new FormData(orderForm).get('customer_name'),
-        order_date: new FormData(orderForm).get('order_date'),
-        items: Array.from(selectedItems, ([menu_slug, item]) => ({
-            menu_slug,
-            recipients: item.recipients.map((name) => name.trim()),
-        })),
-    };
+    const payload = getOrderPayload();
+    renderReview(payload);
+    orderStatus.textContent = 'Kontrollér bestillingen, før den sendes.';
+}
+
+async function sendOrder(payload) {
     orderStatus.textContent = 'Sender bestilling...';
     try {
         const data = await fetchJson('/orders.php', {
@@ -41,6 +71,7 @@ async function submitOrder(event) {
         orderStatus.textContent = `Bestilling modtaget. Ordrenummer: ${data.order_id}`;
         selectedItems.clear();
         renderOrder();
+        orderReview.hidden = true;
     } catch (error) {
         orderStatus.textContent = 'Bestillingen kunne ikke gemmes lige nu.';
     }
