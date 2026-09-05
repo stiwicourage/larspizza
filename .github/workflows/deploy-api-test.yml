@@ -20,7 +20,7 @@ jobs:
     env:
       FTP_HOST: sftp.gigahost.dk
       FTP_PORT: "22"
-      REMOTE_PATH: api.larspizza.dk
+      REMOTE_PATH: .
       PUBLIC_URL: https://api.larspizza.dk/
     steps:
       - name: Checkout repository
@@ -42,7 +42,6 @@ jobs:
         run: |
           lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "sftp://$FTP_HOST:$FTP_PORT" <<EOF
           set sftp:auto-confirm yes
-          mkdir -p $REMOTE_PATH
           mirror --reverse --delete --no-perms --verbose deploy/api-root $REMOTE_PATH
           bye
           EOF
