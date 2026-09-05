@@ -15,7 +15,12 @@ if ($locationSlug === '') {
 }
 
 $sql = <<<'SQL'
-SELECT menu.menu_number, menu.slug, menu.name, menu.description, menu.price_cents
+SELECT
+    menu.menu_number,
+    menu.slug,
+    {name},
+    {description},
+    menu.price_cents
 FROM menu_items AS menu
 JOIN locations AS location ON location.slug = :location
 LEFT JOIN location_menu_overrides AS override
@@ -25,6 +30,15 @@ WHERE menu.is_active = 1
   AND COALESCE(override.is_available, 1) = 1
 ORDER BY menu.menu_number
 SQL;
+
+$sql = str_replace(
+    ['{name}', '{description}'],
+    [
+        repairMojibake('menu.name') . ' AS name',
+        repairMojibake('menu.description') . ' AS description',
+    ],
+    $sql
+);
 
 try {
     $statement = connectDatabase($config)->prepare($sql);

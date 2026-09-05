@@ -20,3 +20,12 @@ function buildDatabaseDsn(array $database): string
     $name = $database['name'] ?? '';
     return "mysql:host=$host;port=$port;dbname=$name;charset=utf8mb4";
 }
+
+function repairMojibake(string $column): string
+{
+    return "CASE
+        WHEN $column LIKE '%Ã%' OR $column LIKE '%â%'
+        THEN CONVERT(CAST(CONVERT($column USING latin1) AS BINARY) USING utf8mb4)
+        ELSE $column
+    END";
+}
