@@ -16,6 +16,7 @@ API'et skal:
 
 - `public/` - entrypoints som kan kaldes fra browser eller frontend
 - `src/` - fælles bootstrap- og response-hjælpere
+- `database/` - MySQL-schema og seed-data
 - `config.example.php` - eksempel på nødvendig konfiguration uden secrets
 
 ## Principper
@@ -30,6 +31,12 @@ API'et skal:
 - `GET /api/locations`
 - `GET /api/menu?location=<slug>`
 - `POST /api/orders`
+
+## Database
+
+Kør først `database/schema.sql` og derefter `database/seed.sql` i MySQL.
+Seed-data indeholder Haslev og Lynge samt de første 18 pizzaer med deres ingredienser.
+Priser og ingrediensmængder er endnu ikke udfyldt.
 
 ## Første deploy-test
 
