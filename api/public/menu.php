@@ -19,8 +19,7 @@ SELECT
     menu.menu_number,
     menu.slug,
     {name},
-    {description},
-    menu.price_cents
+    {description}
 FROM menu_items AS menu
 JOIN locations AS location ON location.slug = :location
 LEFT JOIN location_menu_overrides AS override

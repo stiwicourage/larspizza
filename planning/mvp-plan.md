@@ -2,14 +2,15 @@
 
 ## Mål
 
-Byg et mobil-først website, hvor familie og venner kan bestille pizza til en valgt lokation og dato uden betaling.
+Byg et mobil-først website, hvor familie og venner kan bestille pizza til en valgt lokation og dato.
+Værten skal kunne se bestillingerne og bruge dem som grundlag for indkøb.
 
 ## MVP scope
 
 - GitHub Pages-frontend under `docs/`
 - PHP API hostet på GigaHost
 - MySQL som persistent lagring
-- SMTP-baseret mailafsendelse til valgt lokation
+- SMTP-baseret mailafsendelse til valgt lokation eller vært
 - Tolgee til oversættelser
 - To lokationer fra start:
   - Haslev
@@ -35,7 +36,6 @@ Byg et mobil-først website, hvor familie og venner kan bestille pizza til en va
 - Kundelogin
 - Emailkvittering til bestilleren
 - Admin-panel
-- Indkøbslistevisning
 - Sociale medier og YouTube-integration
 - Avancerede driftsregler
 
@@ -73,6 +73,9 @@ Kerneområder:
 - `order_items`
 - `order_item_recipients`
 
+Priser og betaling er ikke en del af systemet. Senere skal ordredata kunne summeres
+efter ingrediens og mængde, så værten får et praktisk indkøbsgrundlag.
+
 ## Definition of done for MVP
 
 - Brugeren kan bestille fra mobil
@@ -84,4 +87,5 @@ Kerneområder:
 - Ordren gemmes i MySQL
 - Ordren mailes til korrekt lokation
 - Kvittering vises på skærmen
+- Værten kan se de indkomne ordrer
 - Tekster er forberedt til flersprog

@@ -36,7 +36,8 @@ API'et skal:
 
 Kør først `database/schema.sql` og derefter `database/seed.sql` i MySQL.
 Seed-data indeholder Haslev og Lynge samt de første 18 pizzaer med deres ingredienser.
-Priser og ingrediensmængder er endnu ikke udfyldt.
+Der bruges ikke priser eller betaling; systemet registrerer kun, hvad familien og vennerne bestiller.
+Ingrediensmængder til indkøb tilføjes senere.
 
 GitHub Actions initialiserer databasen ved deploy med disse oplysninger:
 
