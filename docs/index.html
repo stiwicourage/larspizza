@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lars' Pizza | Under opbygning</title>
+    <title>Lars' Pizza | Menu</title>
     <meta
         name="description"
-        content="Lars' Pizza er under opbygning. Pizza Napoletana er p&aring; vej til Haslev og Lynge."
+        content="Se Lars' Pizzas menu for Haslev og Lynge."
     >
     <meta name="theme-color" content="#9f2f24">
     <link rel="stylesheet" href="assets/css/site.css">
@@ -14,25 +14,31 @@
 <body>
     <header class="hero">
         <p class="eyebrow">Lars' Pizza</p>
-        <h1>Lars' Pizza &aring;bner snart</h1>
+        <h1>V&aelig;lg din menu</h1>
         <p class="lead">
-            Vi er i gang med at bygge hjemmesiden, mens vi forbereder en varm og enkel oplevelse
-            med Pizza Napoletana.
+            V&aelig;lg lokation for at se de pizzaer, der er tilg&aelig;ngelige.
         </p>
     </header>
 
     <main>
-        <section class="status-card" aria-labelledby="status-title">
-            <h2 id="status-title">Under opbygning</h2>
-            <p>
-                Her kommer snart mere om Lars' Pizza. Indtil da er budskabet enkelt: vi &aring;bner
-                i Haslev og Lynge med fokus p&aring; Pizza Napoletana.
-            </p>
+        <section class="menu-card" aria-labelledby="menu-title">
+            <div class="location-picker">
+                <label for="location-select">Lokation</label>
+                <select id="location-select">
+                    <option value="">Henter lokationer...</option>
+                </select>
+            </div>
+            <div class="menu-heading">
+                <h2 id="menu-title">Menu</h2>
+                <p id="menu-status" role="status">V&aelig;lg en lokation for at se menuen.</p>
+            </div>
+            <div id="menu-list" class="menu-list" aria-live="polite"></div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p>Mere f&oslash;lger snart.</p>
+        <p>Lars' Pizza i Haslev og Lynge.</p>
     </footer>
+    <script src="assets/js/menu.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,100 @@
+name: Deploy API bootstrap
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "api/**"
+      - ".github/workflows/deploy-api-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-api-bootstrap:
+    runs-on: ubuntu-latest
+    environment: Gigahost
+    env:
+      FTP_HOST: sftp.gigahost.dk
+      FTP_PORT: "22"
+      REMOTE_PATH: .
+      PUBLIC_URL: https://api.larspizza.dk/
+      DB_HOST: mysql8.gigahost.dk
+      DB_NAME: ccsgc_larspizza
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install --yes lftp default-mysql-client
+
+      - name: Initialize MySQL database
+        env:
+          DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          DB_USERNAME: ${{ vars.MYSQL_USERNAME }}
+        run: |
+          MYSQL_PWD="$DB_PASSWORD" mysql \
+            --protocol=TCP \
+            --default-character-set=utf8mb4 \
+            --host="$DB_HOST" \
+            --user="$DB_USERNAME" \
+            --database="$DB_NAME" < api/database/schema.sql
+          MYSQL_PWD="$DB_PASSWORD" mysql \
+            --protocol=TCP \
+            --default-character-set=utf8mb4 \
+            --host="$DB_HOST" \
+            --user="$DB_USERNAME" \
+            --database="$DB_NAME" < api/database/seed.sql
+
+      - name: Prepare API bootstrap package
+        env:
+          DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          DB_USERNAME: ${{ vars.MYSQL_USERNAME }}
+        run: |
+          mkdir -p deploy/api-root
+          cp api/public/*.php deploy/api-root/
+          cp -R api/src deploy/api-root/src
+          php -r 'file_put_contents(
+            "deploy/api-root/config.php",
+            "<?php\nreturn " . var_export([
+              "app" => [
+                "name" => "Lars Pizza API",
+                "environment" => "production",
+                "allowed_origins" => [
+                  "https://larspizza.dk",
+                  "https://stiwicourage.github.io"
+                ]
+              ],
+              "database" => [
+                "host" => getenv("DB_HOST"),
+                "port" => 3306,
+                "name" => getenv("DB_NAME"),
+                "username" => getenv("DB_USERNAME"),
+                "password" => getenv("DB_PASSWORD")
+              ]
+            ], true) . ";\n"
+          );'
+
+      - name: Upload API bootstrap package
+        env:
+          FTP_USERNAME: ${{ vars.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "sftp://$FTP_HOST:$FTP_PORT" <<EOF
+          set sftp:auto-confirm yes
+          mirror --reverse --delete --no-perms --verbose deploy/api-root $REMOTE_PATH
+          bye
+          EOF
+
+      - name: Verify deployed API bootstrap
+        run: |
+          response=$(curl --silent --show-error --fail "$PUBLIC_URL")
+          printf '%s' "$response" | php -r 'json_decode(stream_get_contents(STDIN), true, 512, JSON_THROW_ON_ERROR);'
+          echo "## API bootstrap response" >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          echo "$response" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
