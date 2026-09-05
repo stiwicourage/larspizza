@@ -49,6 +49,7 @@ jobs:
       - name: Verify deployed API bootstrap
         run: |
           response=$(curl --silent --show-error --fail "$PUBLIC_URL")
+          printf '%s' "$response" | php -r 'json_decode(stream_get_contents(STDIN), true, 512, JSON_THROW_ON_ERROR);'
           echo "## API bootstrap response" >> "$GITHUB_STEP_SUMMARY"
           echo '' >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"

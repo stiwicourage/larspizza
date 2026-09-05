@@ -33,10 +33,10 @@ API'et skal:
 
 ## Første deploy-test
 
-Første test bruger kun et simpelt health-style endpoint via `api/public/index.php`, så vi kan bekræfte:
+Første test bruger kun et simpelt health-style endpoint via den deployede `index.php`, så vi kan bekræfte:
 
 - at PHP kører på GigaHost
 - at filer kan deployes fra GitHub Actions
 - at API-URL'en svarer med JSON
 
-Workflowet ligger i `.github/workflows/deploy-api-test.yml` og peger nu på underdomænets rod, så bootstrap-koden kan ligge direkte på `https://api.larspizza.dk/`.
+Workflowet ligger i `.github/workflows/deploy-api-test.yml` og uploader `index.php` samt `src/` direkte til underdomænets rod, så bootstrap-koden kan tilgås på `https://api.larspizza.dk/`.
