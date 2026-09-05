@@ -43,7 +43,7 @@ jobs:
           lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "sftp://$FTP_HOST:$FTP_PORT" <<EOF
           set sftp:auto-confirm yes
           mkdir -p $REMOTE_PATH
-          mirror --reverse --delete --verbose deploy/api-root $REMOTE_PATH
+          mirror --reverse --delete --no-perms --verbose deploy/api-root $REMOTE_PATH
           bye
           EOF
 
