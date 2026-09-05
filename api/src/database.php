@@ -9,6 +9,7 @@ function connectDatabase(array $config): PDO
     $pdo = new PDO($dsn, $database['username'] ?? '', $database['password'] ?? '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo->exec('SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci');
     return $pdo;
 }
 

@@ -158,6 +158,20 @@ JOIN ingredients AS ingredient ON ingredient.slug = pairs.ingredient_slug
 ON DUPLICATE KEY UPDATE sort_order = VALUES(sort_order);
 
 UPDATE menu_items
+SET name = CONVERT(
+        CAST(CONVERT(name USING latin1) AS BINARY)
+        USING utf8mb4
+    ),
+    description = CONVERT(
+        CAST(CONVERT(description USING latin1) AS BINARY)
+        USING utf8mb4
+    )
+WHERE name LIKE '%Ã%'
+   OR name LIKE '%â%'
+   OR description LIKE '%Ã%'
+   OR description LIKE '%â%';
+
+UPDATE menu_items
 SET description = CASE slug
     WHEN 'the-carnivore' THEN 'En fyldig og smagfuld pizza med sprød bacon, krydret pepperoni og saftige cocktailpølser på en klassisk bund af tomatsauce og smeltet ost.'
     WHEN 'double-cheese' THEN 'En enkel pizza for osteelskere med to forskellige slags ost, der smelter sammen til et cremet og lækkert ostelag. Dobbelt op på ost, smag og cremethed.'
