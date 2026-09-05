@@ -1,4 +1,4 @@
-CREATE TABLE locations (
+CREATE TABLE IF NOT EXISTS locations (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(80) NOT NULL UNIQUE,
     name VARCHAR(120) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE locations (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE ingredients (
+CREATE TABLE IF NOT EXISTS ingredients (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     slug VARCHAR(120) NOT NULL UNIQUE,
     name VARCHAR(120) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE ingredients (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE menu_items (
+CREATE TABLE IF NOT EXISTS menu_items (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     menu_number SMALLINT UNSIGNED NOT NULL UNIQUE,
     slug VARCHAR(120) NOT NULL UNIQUE,
@@ -27,7 +27,7 @@ CREATE TABLE menu_items (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE location_menu_overrides (
+CREATE TABLE IF NOT EXISTS location_menu_overrides (
     location_id BIGINT UNSIGNED NOT NULL,
     menu_item_id BIGINT UNSIGNED NOT NULL,
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
@@ -38,7 +38,7 @@ CREATE TABLE location_menu_overrides (
         FOREIGN KEY (menu_item_id) REFERENCES menu_items (id)
 );
 
-CREATE TABLE menu_item_ingredients (
+CREATE TABLE IF NOT EXISTS menu_item_ingredients (
     menu_item_id BIGINT UNSIGNED NOT NULL,
     ingredient_id BIGINT UNSIGNED NOT NULL,
     quantity DECIMAL(10, 3) NULL,
@@ -51,7 +51,7 @@ CREATE TABLE menu_item_ingredients (
         FOREIGN KEY (ingredient_id) REFERENCES ingredients (id)
 );
 
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     location_id BIGINT UNSIGNED NOT NULL,
     order_date DATE NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE orders (
         FOREIGN KEY (location_id) REFERENCES locations (id)
 );
 
-CREATE TABLE order_items (
+CREATE TABLE IF NOT EXISTS order_items (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     order_id BIGINT UNSIGNED NOT NULL,
     menu_item_id BIGINT UNSIGNED NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE order_items (
         FOREIGN KEY (menu_item_id) REFERENCES menu_items (id)
 );
 
-CREATE TABLE order_item_recipients (
+CREATE TABLE IF NOT EXISTS order_item_recipients (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     order_item_id BIGINT UNSIGNED NOT NULL,
     recipient_name VARCHAR(160) NOT NULL,

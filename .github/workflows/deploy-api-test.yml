@@ -22,18 +22,59 @@ jobs:
       FTP_PORT: "22"
       REMOTE_PATH: .
       PUBLIC_URL: https://api.larspizza.dk/
+      DB_HOST: mysql8.gigahost.dk
+      DB_NAME: ccsgc_larspizza
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install --yes lftp
+        run: sudo apt-get update && sudo apt-get install --yes lftp default-mysql-client
+
+      - name: Initialize MySQL database
+        env:
+          DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          DB_USERNAME: ${{ vars.MYSQL_USERNAME }}
+        run: |
+          MYSQL_PWD="$DB_PASSWORD" mysql \
+            --protocol=TCP \
+            --host="$DB_HOST" \
+            --user="$DB_USERNAME" \
+            --database="$DB_NAME" < api/database/schema.sql
+          MYSQL_PWD="$DB_PASSWORD" mysql \
+            --protocol=TCP \
+            --host="$DB_HOST" \
+            --user="$DB_USERNAME" \
+            --database="$DB_NAME" < api/database/seed.sql
 
       - name: Prepare API bootstrap package
+        env:
+          DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+          DB_USERNAME: ${{ vars.MYSQL_USERNAME }}
         run: |
           mkdir -p deploy/api-root
           cp api/public/*.php deploy/api-root/
           cp -R api/src deploy/api-root/src
+          php -r 'file_put_contents(
+            "deploy/api-root/config.php",
+            "<?php\nreturn " . var_export([
+              "app" => [
+                "name" => "Lars Pizza API",
+                "environment" => "production",
+                "allowed_origins" => [
+                  "https://larspizza.dk",
+                  "https://stiwicourage.github.io"
+                ]
+              ],
+              "database" => [
+                "host" => getenv("DB_HOST"),
+                "port" => 3306,
+                "name" => getenv("DB_NAME"),
+                "username" => getenv("DB_USERNAME"),
+                "password" => getenv("DB_PASSWORD")
+              ]
+            ], true) . ";\n"
+          );'
 
       - name: Upload API bootstrap package
         env:

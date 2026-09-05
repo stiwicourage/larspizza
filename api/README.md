@@ -38,6 +38,13 @@ Kør først `database/schema.sql` og derefter `database/seed.sql` i MySQL.
 Seed-data indeholder Haslev og Lynge samt de første 18 pizzaer med deres ingredienser.
 Priser og ingrediensmængder er endnu ikke udfyldt.
 
+GitHub Actions initialiserer databasen ved deploy med disse oplysninger:
+
+- Host: `mysql8.gigahost.dk`
+- Database: `ccsgc_larspizza`
+- Bruger: GitHub Environment-variable `Gigahost/MYSQL_USERNAME`
+- Password: GitHub Environment-secret `Gigahost/MYSQL_PASSWORD`
+
 ## Første deploy-test
 
 Første test bruger kun et simpelt health-style endpoint via den deployede `index.php`, så vi kan bekræfte:
