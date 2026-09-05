@@ -6,6 +6,7 @@ return [
         'environment' => 'production',
         'allowed_origins' => [
             'https://larspizza.dk',
+            'https://www.larspizza.dk',
             'https://stiwicourage.github.io',
         ],
     ],
