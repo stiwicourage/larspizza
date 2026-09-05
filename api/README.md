@@ -30,7 +30,7 @@ API'et skal:
 
 - `GET /locations.php`
 - `GET /menu.php?location=<slug>`
-- `POST /api/orders`
+- `POST /orders.php`
 
 ## Database
 

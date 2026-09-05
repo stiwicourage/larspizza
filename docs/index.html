@@ -33,6 +33,19 @@
                 <p id="menu-status" role="status">V&aelig;lg en lokation for at se menuen.</p>
             </div>
             <div id="menu-list" class="menu-list" aria-live="polite"></div>
+            <section class="order-panel" aria-labelledby="order-title">
+                <h2 id="order-title">Bestil pizza</h2>
+                <p>Tilføj pizzaer fra menuen, og skriv hvem der skal have dem.</p>
+                <form id="order-form">
+                    <label for="customer-name">Bestillers navn</label>
+                    <input id="customer-name" name="customer_name" required>
+                    <label for="order-date">Dato</label>
+                    <input id="order-date" name="order_date" type="date" required>
+                    <div id="order-list" class="order-list"></div>
+                    <button type="submit">Gennemgå bestilling</button>
+                    <p id="order-status" role="status"></p>
+                </form>
+            </section>
         </section>
     </main>
 

@@ -18,7 +18,7 @@ jsonResponse(
         'endpoints' => [
             'locations' => 'GET /locations.php',
             'menu' => 'GET /menu.php?location=<slug>',
-            'orders' => 'POST /api/orders',
+            'orders' => 'POST /orders.php',
         ],
     ]
 );
