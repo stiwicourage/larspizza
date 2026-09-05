@@ -38,11 +38,13 @@ jobs:
         run: |
           MYSQL_PWD="$DB_PASSWORD" mysql \
             --protocol=TCP \
+            --default-character-set=utf8mb4 \
             --host="$DB_HOST" \
             --user="$DB_USERNAME" \
             --database="$DB_NAME" < api/database/schema.sql
           MYSQL_PWD="$DB_PASSWORD" mysql \
             --protocol=TCP \
+            --default-character-set=utf8mb4 \
             --host="$DB_HOST" \
             --user="$DB_USERNAME" \
             --database="$DB_NAME" < api/database/seed.sql
