@@ -15,7 +15,7 @@ API'et skal:
 ## Struktur
 
 - `public/` - entrypoints som kan kaldes fra browser eller frontend
-- `src/` - fælles bootstrap- og response-hjælpere
+- `src/` - fælles bootstrap-, database- og response-hjælpere
 - `database/` - MySQL-schema og seed-data
 - `config.example.php` - eksempel på nødvendig konfiguration uden secrets
 
@@ -26,10 +26,10 @@ API'et skal:
 - API'et skal returnere konsistente JSON-svar
 - CORS skal begrænses til kendte frontend-domæner
 
-## Næste endpoints
+## Læse-endpoints
 
-- `GET /api/locations`
-- `GET /api/menu?location=<slug>`
+- `GET /locations.php`
+- `GET /menu.php?location=<slug>`
 - `POST /api/orders`
 
 ## Database

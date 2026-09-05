@@ -32,7 +32,7 @@ jobs:
       - name: Prepare API bootstrap package
         run: |
           mkdir -p deploy/api-root
-          cp api/public/index.php deploy/api-root/index.php
+          cp api/public/*.php deploy/api-root/
           cp -R api/src deploy/api-root/src
 
       - name: Upload API bootstrap package

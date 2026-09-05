@@ -16,8 +16,8 @@ jsonResponse(
         'version' => 1,
         'status' => 'ready-for-endpoints',
         'endpoints' => [
-            'locations' => 'GET /api/locations',
-            'menu' => 'GET /api/menu?location=<slug>',
+            'locations' => 'GET /locations.php',
+            'menu' => 'GET /menu.php?location=<slug>',
             'orders' => 'POST /api/orders',
         ],
     ]
