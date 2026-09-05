@@ -4,6 +4,7 @@ Dette katalog samler projektets plan, MVP-afgrænsning og backlog, så arbejdet 
 
 ## Filer
 
+- `architecture.md` - frontend/backend-grænser, repo-struktur og deploy-retning
 - `mvp-plan.md` - mål, arkitektur og implementeringsrækkefølge for MVP
 - `backlog.md` - opgaver opdelt i rækkefølge med status og næste fokus
 

@@ -1,0 +1,56 @@
+name: Deploy API bootstrap
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "api/**"
+      - ".github/workflows/deploy-api-test.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-api-bootstrap:
+    runs-on: ubuntu-latest
+    environment: Gigahost
+    env:
+      FTP_HOST: sftp.gigahost.dk
+      FTP_PORT: "22"
+      REMOTE_PATH: api.larspizza.dk
+      PUBLIC_URL: https://api.larspizza.dk/
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install --yes lftp
+
+      - name: Prepare API bootstrap package
+        run: |
+          mkdir -p deploy/api-root
+          cp api/public/index.php deploy/api-root/index.php
+          cp -R api/src deploy/api-root/src
+
+      - name: Upload API bootstrap package
+        env:
+          FTP_USERNAME: ${{ vars.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "sftp://$FTP_HOST:$FTP_PORT" <<EOF
+          set sftp:auto-confirm yes
+          mkdir -p $REMOTE_PATH
+          mirror --reverse --delete --verbose deploy/api-root $REMOTE_PATH
+          bye
+          EOF
+
+      - name: Verify deployed API bootstrap
+        run: |
+          response=$(curl --silent --show-error --fail "$PUBLIC_URL")
+          echo "## API bootstrap response" >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          echo "$response" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

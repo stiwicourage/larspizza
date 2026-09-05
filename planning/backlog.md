@@ -2,6 +2,10 @@
 
 ## Nu
 
+**Aktuel fokus**
+- Arkitektur og projektstruktur er i gang
+- PHP API-struktur scaffoldes nu som grundlag for næste opgaver
+
 ### 1. Arkitektur og projektstruktur
 
 **Mål**

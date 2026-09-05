@@ -1,0 +1,42 @@
+# Lars' Pizza API
+
+Denne mappe indeholder den kommende PHP API, som deployes til GigaHost og fungerer som mellemled mellem GitHub Pages-frontend, MySQL og SMTP.
+
+## Formål
+
+API'et skal:
+
+- modtage bestillinger fra frontend
+- validere data
+- gemme ordrer i MySQL
+- sende mail til korrekt lokation
+- returnere JSON-svar til frontend
+
+## Struktur
+
+- `public/` - entrypoints som kan kaldes fra browser eller frontend
+- `src/` - fælles bootstrap- og response-hjælpere
+- `config.example.php` - eksempel på nødvendig konfiguration uden secrets
+
+## Principper
+
+- Secrets må ikke committes
+- Frontend må ikke kende database- eller SMTP-adgang
+- API'et skal returnere konsistente JSON-svar
+- CORS skal begrænses til kendte frontend-domæner
+
+## Næste endpoints
+
+- `GET /api/locations`
+- `GET /api/menu?location=<slug>`
+- `POST /api/orders`
+
+## Første deploy-test
+
+Første test bruger kun et simpelt health-style endpoint via `api/public/index.php`, så vi kan bekræfte:
+
+- at PHP kører på GigaHost
+- at filer kan deployes fra GitHub Actions
+- at API-URL'en svarer med JSON
+
+Workflowet ligger i `.github/workflows/deploy-api-test.yml` og peger nu på underdomænets rod, så bootstrap-koden kan ligge direkte på `https://api.larspizza.dk/`.
